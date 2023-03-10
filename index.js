@@ -1,22 +1,34 @@
 const http = require("http");
-const url = require("url");
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
-	const address_url =
-		"http://localhost:5000/contact?name=mezba&country=bangladesh";
+	if ((req.url = "/")) {
+		// fs.readFile("data.txt", (err, data) => {
+		// 	if (err) {
+		// 		res.write("Failed to read data !!");
+		// 		res.end();
+		// 	} else {
+		// 		res.write(data);
+		// 		res.end();
+		// 	}
+		// });
 
-	const parsed_url = url.parse(address_url, true);
-	// console.log(parsed_url);
+		// const data = fs.readFileSync("data.txt");
+		// res.write(data);
+		// res.end();
 
-	const queryObject = parsed_url.host;
-	console.log(queryObject);
+		fs.writeFile("newData.txt", "hello node js!!", (err) => {
+			if (err) {
+				res.write("Data Failed to write");
+				res.end();
+			} else {
+				res.write("data written successfully");
+				res.end();
+			}
+		});
+	}
 });
 
-console.log(url);
 const PORT = 5000;
 server.listen(PORT);
 console.log(`server is running on port at ${PORT}`);
-
-// /contact?name=mezba&country=bangladesh
-// /admin
-// /home
